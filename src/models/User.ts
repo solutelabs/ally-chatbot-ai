@@ -1,5 +1,18 @@
 import mongoose, { Document, Schema } from "mongoose";
 
+export interface FileData extends Document {
+    fileId: string;
+    fileName: string;
+    fileSize: number;
+}
+
+
+export const FileSchema: Schema<FileData> = new Schema({
+    fileId: { type: String, required: [true, "FileId is required"], unique: true },
+    fileName: { type: String, required: [true, "FileName is required"] },
+    fileSize: { type: Number, required: [true, "FileSize is required"] },
+})
+
 
 export interface ChatBot extends Document {
     name: string;
@@ -10,8 +23,9 @@ export interface ChatBot extends Document {
     createdAt: Date;
     gptModel: string;
     temperature: number;
-    numberOfCharacters: string;
+    totalFileSize: number;
     vectorStoreId: string;
+    files: FileData[];
 }
 
 export const ChatBotSchema: Schema<ChatBot> = new Schema({
@@ -23,8 +37,9 @@ export const ChatBotSchema: Schema<ChatBot> = new Schema({
     createdAt: { type: Date, required: true },
     gptModel: { type: String, required: [true, "GPT Model is required"] },
     temperature: { type: Number, required: [true, "Temperature is required"] },
-    numberOfCharacters: { type: String, required: [true, "Number of characters is required"] },
+    totalFileSize: { type: Number, required: [true, "Total file size is required"] },
     vectorStoreId: { type: String, required: [true, "VectorStoreId is required"], unique: true },
+    files: { type: [FileSchema], required: [true, "To create chatbot files are required"] },
 })
 
 export interface User extends Document {

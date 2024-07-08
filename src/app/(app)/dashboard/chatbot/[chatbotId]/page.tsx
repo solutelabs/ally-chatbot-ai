@@ -9,6 +9,8 @@ import { Label } from "@/components/ui/label"
 import getChatbot from "./action"
 import { notFound } from "next/navigation"
 import CopyToClipboard from "@/components/custom/CopyToClipboard"
+import convertToMB from "@/lib/convertToMB"
+import RetrainChatbot from "@/components/custom/RetrainChatbot"
 
 export interface chatbot {
     name: string;
@@ -18,7 +20,7 @@ export interface chatbot {
     createdAt: string;
     gptModel: string;
     temperature: number;
-    numberOfCharacters: number;
+    totalFileSize: number;
 }
 
 export default async function Page({ params }: { params: { chatbotId: string } }) {
@@ -60,8 +62,8 @@ export default async function Page({ params }: { params: { chatbotId: string } }
                                     <Label htmlFor="visibility">{chatbot.visibility}</Label>
                                 </div>
                                 <div className="space-y-1 flex flex-col items-start justify-start mb-4">
-                                    <Label htmlFor="Number of characters" className="text-bold text-gray-500">Number of Characters</Label>
-                                    <Label htmlFor="Number of characters">{chatbot.numberOfCharacters.toLocaleString()}</Label>
+                                    <Label htmlFor="Total File Size" className="text-bold text-gray-500">Total File Size</Label>
+                                    <Label htmlFor="Total File Size">{convertToMB(chatbot.totalFileSize)} MB</Label>
                                 </div>
                                 <div className="space-y-1 flex flex-col items-start justify-start mb-4">
                                     <Label htmlFor="Temperature" className="text-bold text-gray-500">Temperature</Label>
@@ -83,10 +85,14 @@ export default async function Page({ params }: { params: { chatbotId: string } }
                     </Card>
                 </TabsContent>
                 <TabsContent value="sources">
-                    <div className="flex flex-col items-center justify-center min-h-[70vh]">
-                        <h1 className="text-5xl font-bold mb-5">ALLY</h1>
-                        <h1 className="text-2xl font-bold mb-5">Ai Assistant ChatBot</h1>
-                    </div>
+                    <Card className="">
+                        <CardHeader>
+                            <CardTitle>Data Sources</CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-row items-start justify-center w-[60vw]">
+                            <RetrainChatbot chatbotId={chatbot.chatBotId} />  
+                        </CardContent>
+                    </Card>
                 </TabsContent>
                 <TabsContent value="connect">
                     <div className="flex flex-col items-center justify-center min-h-[70vh]">

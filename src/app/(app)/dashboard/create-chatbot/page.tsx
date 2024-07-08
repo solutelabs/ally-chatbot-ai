@@ -18,13 +18,17 @@ import { useRouter } from "next/navigation";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { ApiResponseType } from "@/types/ApiResponse";
 import { FileSvgDraw } from "@/components/icons/Icons";
-import countCharacters from "@/lib/characterCount.js";
 import { toast } from "sonner"
-const maxNumberOfCharacter = 200000;
+import convertToMB from "@/lib/convertToMB";
+import { maxTotalFileSize } from "@/lib/utils";
+export interface FileWithCount {
+  file: File;
+  count: number | null;
+}
 
 export default function Page() {
 
-  const [characterCount, setCharacterCount] = useState<number>(0);
+  const [totalFileSize, setTotalFileSize] = useState<number>(0);
   const [files, setFiles] = useState<File[] | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,14 +43,13 @@ export default function Page() {
 
   useEffect(() => {
     if (files) {
-      setCharacterCount(0);
-      files.forEach(async (file) => {
-        const count = await countCharacters(file);
-        setCharacterCount(characterCount => characterCount + (count ?? 0));
+      setTotalFileSize(0);
+      files.forEach((file) => {
+        setTotalFileSize(totalFileSize => totalFileSize + file.size);
       })
     }
     else {
-      setCharacterCount(0)
+      setTotalFileSize(0)
     }
   }, [files])
 
@@ -56,15 +59,14 @@ export default function Page() {
       return;
     }
 
-    if (characterCount > maxNumberOfCharacter) {
-      toast.error("Character count exceeds the limit of 100,000 characters")
+    if (totalFileSize > maxTotalFileSize) {
+      toast.error("Total file size exceeds the limit of 5MB")
       return;
     }
 
     // creating formData
     const formData = new FormData();
     formData.append("name", data.name);
-    formData.append("characterCount", characterCount.toString());
     for (const file of files) {
       formData.append("files", file);
     }
@@ -76,7 +78,6 @@ export default function Page() {
         body: formData,
       });
       const data: ApiResponseType = await response.json();
-      console.log(data);
       toast.success("Chatbot Created Successfully");
       router.push(`/dashboard/chatbot/${data.data.chatbotId}`);
     } catch (error) {
@@ -89,7 +90,7 @@ export default function Page() {
 
   const dropZoneConfig = {
     maxFiles: 5,
-    maxSize: 1024 * 1024 * 5,
+    maxSize: maxTotalFileSize,
     multiple: true,
     accept: {
       "application/pdf": [".pdf"],
@@ -102,7 +103,7 @@ export default function Page() {
   return (
     <div className="flex flex-col items-center justify-center">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" encType="multipart/form-data">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-2/3" encType="multipart/form-data">
           <div className="flex flex-col items-center justify-center w-full">
             <h1 className="text-3xl font-bold mt-10">Data Sources</h1>
             <p className="text-sm text-gray-500">Add your data sources to train your chatbot</p>
@@ -147,7 +148,7 @@ export default function Page() {
             </div>
             <div className="flex flex-col justify-center items-start border rounded-sm p-6 w-1/3">
               <h2 className="text-lg font-semibold">Sources</h2>
-              <p>Total detected characters: <span className="text-bold text-sm text-gray-5000">{characterCount.toLocaleString()}/{maxNumberOfCharacter.toLocaleString()} limit</span></p>
+              <p>Total file size: <span className="text-bold text-sm text-gray-5000">{convertToMB(totalFileSize)}{" "}MB/ {convertToMB(maxTotalFileSize)}{" "}MB</span></p>
               <Button type="submit" disabled={isSubmitting} className='w-full mt-4'>
                 {
                   isSubmitting ? (

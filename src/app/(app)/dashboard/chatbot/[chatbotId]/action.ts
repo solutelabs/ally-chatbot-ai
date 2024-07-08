@@ -40,7 +40,7 @@ export default async function getChatbot(chatbotId: string) {
                     "chatBots.createdAt": 1,
                     "chatBots.gptModel": 1,
                     "chatBots.temperature": 1,
-                    "chatBots.numberOfCharacters": 1
+                    "chatBots.totalFileSize": 1
                 }
             }
         ]).exec();

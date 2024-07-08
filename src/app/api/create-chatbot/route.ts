@@ -4,8 +4,9 @@ import { NextRequest } from "next/server";
 import OpenAI from "openai";
 import { authOptions } from "../auth/[...nextauth]/options";
 import { ApiResponse } from "@/types/ApiResponse";
-import UserModel, { ChatBot } from "@/models/User";
+import UserModel, { ChatBot, FileData } from "@/models/User";
 import { v4 as uuidv4 } from "uuid";
+import countCharacters from "@/lib/serverCharacterCount";
 
 export async function POST(req: NextRequest) {
 
@@ -23,7 +24,6 @@ export async function POST(req: NextRequest) {
 
     const files = formData.getAll("files") as File[];
     const vectorStoreName = _user.username + "-" + formData.get("name") as string;
-    const characterCount = formData.get("characterCount") as string;
     const username = _user.username;
     const chatbotId = uuidv4();
 
@@ -36,6 +36,21 @@ export async function POST(req: NextRequest) {
             return Response.json(ApiResponse(false, "User not found"), { status: 404 });
         }
 
+
+        // verifying number of characters in files
+        let totalFileSize = 0;
+
+        for (const file of files) {
+            totalFileSize += file.size;
+        }
+
+        const maxTotalFileSize = 5 * 1024 * 1024;
+
+
+        if (totalFileSize > maxTotalFileSize) {
+            return Response.json(ApiResponse(false, "Total file size exceeds the limit of 5MB"), { status: 400 });
+        }
+
         const openai = new OpenAI({
             apiKey: process.env.OPENAI_API_KEY,
         });
@@ -45,6 +60,21 @@ export async function POST(req: NextRequest) {
         });
 
         const responseOfFilesUpload = await openai.beta.vectorStores.fileBatches.uploadAndPoll(vectorStore.id, { files });
+
+
+        const filesResponse = await openai.beta.vectorStores.files.list(vectorStore.id);
+        const filesData = filesResponse.data;
+
+        const fileIds = filesData.map(file => file.id);
+
+        const filesWithInfo: FileData[] = await Promise.all(fileIds.map(async (fileId) => {
+            const file = await openai.files.retrieve(fileId);
+            return {
+                fileId: file.id,
+                fileName: file.filename,
+                fileSize: file.bytes,
+            } as FileData;
+        }));
 
         const assistantName = `${username}-${vectorStore.id}`;
 
@@ -69,8 +99,9 @@ export async function POST(req: NextRequest) {
             createdAt: new Date(),
             gptModel: "gpt-4o",
             temperature: 0,
-            numberOfCharacters: characterCount,
+            totalFileSize: totalFileSize,
             vectorStoreId: vectorStore.id,
+            files: filesWithInfo,
         }
 
         user.chatBots.push(newChatbot as ChatBot);
