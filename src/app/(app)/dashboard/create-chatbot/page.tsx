@@ -14,15 +14,15 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { createChatbotSchema } from "@/schemas/createChatbotSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { ApiResponseType } from "@/types/ApiResponse";
 import { FileSvgDraw } from "@/components/icons/Icons";
 import countCharacters from "@/lib/characterCount.js";
+import { toast } from "sonner"
+const maxNumberOfCharacter = 200000;
 
-
-const FileUploaderTest = () => {
+export default function Page() {
 
   const [characterCount, setCharacterCount] = useState<number>(0);
   const [files, setFiles] = useState<File[] | null>(null);
@@ -35,7 +35,6 @@ const FileUploaderTest = () => {
     },
   });
 
-  const { toast } = useToast();
   const router = useRouter();
 
   useEffect(() => {
@@ -53,18 +52,12 @@ const FileUploaderTest = () => {
 
   const onSubmit = async (data: z.infer<typeof createChatbotSchema>) => {
     if (!files) {
-      toast({
-        title: "Please upload at least one file",
-        variant: "destructive",
-      });
+      toast.error("Please upload at least one file");
       return;
     }
 
-    if (characterCount > 100000) {
-      toast({
-        title: "Character count exceeds the limit of 100,000 characters",
-        variant: "destructive",
-      });
+    if (characterCount > maxNumberOfCharacter) {
+      toast.error("Character count exceeds the limit of 100,000 characters")
       return;
     }
 
@@ -84,12 +77,11 @@ const FileUploaderTest = () => {
       });
       const data: ApiResponseType = await response.json();
       console.log(data);
+      toast.success("Chatbot Created Successfully");
+      router.push(`/dashboard/chatbot/${data.data.chatbotId}`);
     } catch (error) {
       console.error("Error creating chatbot: ", error);
-      toast({
-        title: "Chatbot Creation Failed",
-        variant: "destructive",
-      })
+      toast.error("Chatbot Creation Failed");
     } finally {
       setIsSubmitting(false);
     }
@@ -97,7 +89,7 @@ const FileUploaderTest = () => {
 
   const dropZoneConfig = {
     maxFiles: 5,
-    maxSize: 1024 * 1024 * 4,
+    maxSize: 1024 * 1024 * 5,
     multiple: true,
     accept: {
       "application/pdf": [".pdf"],
@@ -128,15 +120,15 @@ const FileUploaderTest = () => {
               </FormItem>
             )}
           />
-          <div className="flex flex-col md:flex-row items-center justify-evenly w-full min-h-[45vh] md: m-4">
+          <div className="flex flex-col md:flex-row items-center justify-between w-full min-h-[45vh] ">
             <div className="flex justify-end items-center">
               <FileUploader
                 value={files}
                 onValueChange={setFiles}
                 dropzoneOptions={dropZoneConfig}
-                className="relative bg-background rounded-lg p-2 border border-black w-[500px] border-dashed md:m-4"
+                className="relative bg-background rounded-lg p-2 border border-black w-[500px] min-h-[27vh] border-dashed"
               >
-                <FileInput className="outline-dashed outline-1 outline-white">
+                <FileInput className="flex items-center justify-center h-full outline-dashed outline-1 outline-white">
                   <div className="flex items-center justify-center flex-col pt-3 pb-4 w-full ">
                     <FileSvgDraw />
                   </div>
@@ -152,16 +144,10 @@ const FileUploaderTest = () => {
                     ))}
                 </FileUploaderContent>
               </FileUploader>
-              {/* <Input type="file" multiple={true} accept=".pdf, .docx, .doc, .txt" onChange={(e) => {
-                const files = e.target.files;
-                if (files) {
-                  setFiles(Array.from(files));
-                }
-              }} /> */}
             </div>
-            <div className="flex flex-col justify-center items-start border rounded-sm p-6 md:m-4 w-1/3 md:w-full">
+            <div className="flex flex-col justify-center items-start border rounded-sm p-6 w-1/3">
               <h2 className="text-lg font-semibold">Sources</h2>
-              <p>Total detected characters: <span className="text-bold text-sm text-gray-500">{characterCount}/100,000 limit</span></p>
+              <p>Total detected characters: <span className="text-bold text-sm text-gray-5000">{characterCount.toLocaleString()}/{maxNumberOfCharacter.toLocaleString()} limit</span></p>
               <Button type="submit" disabled={isSubmitting} className='w-full mt-4'>
                 {
                   isSubmitting ? (
@@ -179,5 +165,3 @@ const FileUploaderTest = () => {
     </div>
   );
 };
-
-export default FileUploaderTest;

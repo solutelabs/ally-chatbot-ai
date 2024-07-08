@@ -10,7 +10,7 @@ export interface ChatBot extends Document {
     createdAt: Date;
     gptModel: string;
     temperature: number;
-    numberOfCharacters: number;
+    numberOfCharacters: string;
     vectorStoreId: string;
 }
 
@@ -23,7 +23,7 @@ export const ChatBotSchema: Schema<ChatBot> = new Schema({
     createdAt: { type: Date, required: true },
     gptModel: { type: String, required: [true, "GPT Model is required"] },
     temperature: { type: Number, required: [true, "Temperature is required"] },
-    numberOfCharacters: { type: Number, required: [true, "Number of characters is required"] },
+    numberOfCharacters: { type: String, required: [true, "Number of characters is required"] },
     vectorStoreId: { type: String, required: [true, "VectorStoreId is required"], unique: true },
 })
 

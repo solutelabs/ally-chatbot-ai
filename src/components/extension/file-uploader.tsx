@@ -83,7 +83,7 @@ export const FileUploader = forwardRef<
                 "text/plain": [".txt"],
             },
             maxFiles = 4,
-            maxSize = 10 * 1024 * 1024,
+            maxSize = 4 * 1024 * 1024,
             multiple = true,
         } = dropzoneOptions;
 

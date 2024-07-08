@@ -1,10 +1,6 @@
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
 } from "@/components/ui/card"
 import Link from "next/link";
 import { BotIcon, LockIcon, GlobeIcon } from "../icons/Icons";
@@ -16,7 +12,7 @@ export interface ChatbotCardProps {
 const ChatbotCard = ({ chatbot }: ChatbotCardProps) => {
     return (
         <Card className="relative overflow-hidden transition-transform duration-300 ease-in-out rounded-lg shadow-lg group hover:shadow-xl hover:-translate-y-2">
-            <Link href={"/chatbot/" + chatbot.chatBotId} className="absolute inset-0 z-10">
+            <Link href={"/dashboard/chatbot/" + chatbot.chatBotId} className="absolute inset-0 z-10">
                 <span className="sr-only">View Chatbot</span>
             </Link>
             <div className="flex items-center justify-center h-40 bg-secondary">

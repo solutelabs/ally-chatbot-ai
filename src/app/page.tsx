@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
 
-
-const Home = () => {
+export default function Page() {
     return (
         <div className="flex flex-col items-center justify-center h-screen">
             <h1 className="text-5xl font-bold mb-5">ALLY</h1>
@@ -13,5 +12,3 @@ const Home = () => {
         </div>
     );
 }
-
-export default Home;

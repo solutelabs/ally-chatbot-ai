@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import React, { Suspense } from 'react'
 import { getChatbots } from './action';
-import ChatbotCard from '@/components/component/chatbot-card';
+import ChatbotCard from '@/components/custom/ChatbotCard';
 import ChatbotsSkeleton from '@/components/skeletons/ChatbotsSkeleton';
 
 export interface Chatbot {
@@ -11,20 +11,7 @@ export interface Chatbot {
     visibility: string;
 }
 
-// const chatbots: Chatbot[] = [
-//     { chatBotId: "1", name: "Chatbot 1", visibility: "public" },
-//     { chatBotId: "2", name: "Chatbot 2", visibility: "private" },
-//     { chatBotId: "3", name: "Chatbot 3", visibility: "public" },
-//     { chatBotId: "4", name: "Chatbot 4", visibility: "private" },
-//     { chatBotId: "5", name: "Chatbot 5", visibility: "public" },
-//     { chatBotId: "6", name: "Chatbot 6", visibility: "private" },
-//     { chatBotId: "7", name: "Chatbot 7", visibility: "public" },
-//     { chatBotId: "8", name: "Chatbot 8", visibility: "private" },
-//     { chatBotId: "9", name: "Chatbot 9", visibility: "public" },
-//     { chatBotId: "10", name: "Chatbot 10", visibility: "private" },
-// ]
-
-export default async function Dashboard() {
+export default async function Page() {
 
     const chatbots = await getChatbots();
 

@@ -22,7 +22,8 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
 
     const files = formData.getAll("files") as File[];
-    const vectorStoreName = formData.get("name") as string;
+    const vectorStoreName = _user.username + "-" + formData.get("name") as string;
+    const characterCount = formData.get("characterCount") as string;
     const username = _user.username;
     const chatbotId = uuidv4();
 
@@ -67,15 +68,15 @@ export async function POST(req: NextRequest) {
             trainedAt: new Date(),
             createdAt: new Date(),
             gptModel: "gpt-4o",
-            temperature: 0.5,
-            numberOfCharacters: 100,
+            temperature: 0,
+            numberOfCharacters: characterCount,
             vectorStoreId: vectorStore.id,
         }
 
         user.chatBots.push(newChatbot as ChatBot);
         await user.save();
 
-        return Response.json(ApiResponse(true, "Chatbot created successfully", newChatbot), { status: 201 });
+        return Response.json(ApiResponse(true, "Chatbot created successfully", { chatbotId: newChatbot.chatBotId }), { status: 201 });
 
     } catch (error) {
         console.log("Error creating chatbot", error);

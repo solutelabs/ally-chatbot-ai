@@ -1,7 +1,4 @@
-"use client"
-
-import { User } from 'next-auth';
-import { useSession, signOut } from 'next-auth/react'
+import { User, getServerSession } from 'next-auth';
 import React from 'react'
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
@@ -14,12 +11,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { LogOut } from 'lucide-react';
 import Link from 'next/link';
+import LogoutButton from './LogoutButton';
+import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 
+export default async function Navbar() {
 
+    const session = await getServerSession(authOptions);
 
-const Navbar = () => {
-
-    const { data: session } = useSession();
     const user: User = session?.user as User;
 
     return (
@@ -38,14 +36,16 @@ const Navbar = () => {
                         <DropdownMenuLabel className='text-lg text-center'>{user?.username}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <Link href="/dashboard/create-chatbot">
-                            <DropdownMenuItem>
+                            <DropdownMenuItem className='cursor-pointer'>
                                 Create ChatBot
                             </DropdownMenuItem>
                         </Link>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => signOut()} className='cursor-pointer'>
-                            <LogOut className="mr-2 h-4 w-4" />
-                            <span>Log out</span>
+                        <DropdownMenuItem className='cursor-pointer'>
+                            <LogoutButton>
+                                <LogOut className="mr-2 h-4 w-4" />
+                                <span>Log out</span>
+                            </LogoutButton>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -54,5 +54,3 @@ const Navbar = () => {
 
     )
 }
-
-export default Navbar

@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import AuthProvider from "@/context/AuthProvider";
 import { Toaster } from "@/components/ui/toaster";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          <SonnerToaster />
         </body>
       </AuthProvider>
     </html>
