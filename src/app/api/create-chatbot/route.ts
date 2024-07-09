@@ -6,7 +6,7 @@ import { authOptions } from "../auth/[...nextauth]/options";
 import { ApiResponse } from "@/types/ApiResponse";
 import UserModel, { ChatBot, FileData } from "@/models/User";
 import { v4 as uuidv4 } from "uuid";
-import countCharacters from "@/lib/serverCharacterCount";
+import { getISTDate } from "@/lib/utils";
 
 export async function POST(req: NextRequest) {
 
@@ -95,8 +95,8 @@ export async function POST(req: NextRequest) {
             chatBotId: chatbotId,
             visibility: "private",
             assistantId: assistant.id,
-            trainedAt: new Date(),
-            createdAt: new Date(),
+            trainedAt: getISTDate(),
+            createdAt: getISTDate(),
             gptModel: "gpt-4o",
             temperature: 0,
             totalFileSize: totalFileSize,

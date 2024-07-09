@@ -79,7 +79,7 @@ export default function Page() {
       });
       const data: ApiResponseType = await response.json();
       toast.success("Chatbot Created Successfully");
-      router.push(`/dashboard/chatbot/${data.data.chatbotId}`);
+      router.push(`/dashboard/chatbot/${data.data.chatbotId}/chatbot`);
     } catch (error) {
       console.error("Error creating chatbot: ", error);
       toast.error("Chatbot Creation Failed");
@@ -115,7 +115,7 @@ export default function Page() {
               <FormItem>
                 <FormLabel>Chatbot Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Solute Labs Chatbot" {...field} />
+                  <Input placeholder="Solute Labs Chatbot" {...field} disabled={isSubmitting} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -140,7 +140,7 @@ export default function Page() {
                     files.map((file, i) => (
                       <FileUploaderItem key={i} index={i}>
                         <Paperclip className="h-4 w-4 stroke-current" />
-                        <span>{file.name}</span>
+                        <p className='w-full text-wrap pr-8'>{file.name}</p>
                       </FileUploaderItem>
                     ))}
                 </FileUploaderContent>

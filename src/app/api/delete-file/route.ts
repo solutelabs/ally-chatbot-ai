@@ -21,23 +21,27 @@ export async function DELETE(req: Request) {
     const userId = new mongoose.Types.ObjectId(_user._id);
 
     try {
-        const user = await UserModel.findOneAndUpdate(
-            { _id: userId, 'chatBots.chatBotId': chatbotId },
-            { $pull: { 'chatBots.$.files': { fileId } } },
-            { new: true }
+        const user = await UserModel.findOne(
+            { _id: userId },
         );
 
         if (!user) {
-            return Response.json(ApiResponse(false, "File not found"), { status: 404 });
+            return Response.json(ApiResponse(false, "User not found"), { status: 404 });
         }
 
-        const updatedChatbot = user.chatBots.find((chatbot) => chatbot.chatBotId === chatbotId);
+        const chatbot = user.chatBots.find((chatbot) => chatbot.chatBotId === chatbotId);
 
-        if (!updatedChatbot) {
+        if (!chatbot) {
             return Response.json(ApiResponse(false, "Chatbot not found"), { status: 404 });
         }
 
-        const vectorStoreId = updatedChatbot.vectorStoreId;
+        const file = chatbot.files.find((file) => file.fileId === fileId);
+
+        if (!file) {
+            return Response.json(ApiResponse(false, "File not found"), { status: 404 });
+        }
+
+        const vectorStoreId = chatbot.vectorStoreId;
 
         const openai = new OpenAI({
             apiKey: process.env.OPENAI_API_KEY,
@@ -47,6 +51,12 @@ export async function DELETE(req: Request) {
         const openaiFileRemoveFromVectorStoreResult = await openai.beta.vectorStores.files.del(vectorStoreId, fileId);
 
         if (openaiFileDeleteResult.deleted && openaiFileRemoveFromVectorStoreResult.deleted) {
+
+            chatbot.totalFileSize -= file.fileSize;
+            chatbot.files = chatbot.files.filter((file) => file.fileId !== fileId);
+
+            await user.save();
+
             return Response.json(ApiResponse(true, "File deleted"), { status: 200 });
         }
 
