@@ -9,6 +9,6 @@ export default async function Iframe({ params }: { params: { chatbotId: string }
     if (!chatbot) {
         notFound();
     }
-
+    
     return <ChatbotIframe chatbotId={chatbotId} />
 }
