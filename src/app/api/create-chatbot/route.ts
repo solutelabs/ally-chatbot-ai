@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
 
         const assistant = await openai.beta.assistants.create({
             name: assistantName,
-            instructions: "Use vector store to retrieve related information to users query and give proper responses. Do not give response more than 100 words.",
+            instructions: "Your primary goal is to provide accurate and contextually relevant responses based on the information retrieved from the given documents and knowledge base. Always prioritize the context of the user's query and avoid generating answers that are outside the scope of the provided data. If the necessary information is not available, clearly communicate the limitation instead of making assumptions or providing potentially misleading information.Use vector store to retrieve related information to users query and give proper responses. Do not give response more than 100 words. Don't give answer to personal questions, only give answer to queries related to the files provided. Also don't include sources citation in response.",
             model: "gpt-4o",
             tools: [{ type: "file_search" }],
             tool_resources: {

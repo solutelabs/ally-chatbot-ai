@@ -5,7 +5,7 @@ import OpenAI from "openai";
 import { ApiResponse } from "@/types/ApiResponse";
 import UserModel, { ChatBot } from "@/models/User";
 import { authOptions } from "../../auth/[...nextauth]/options";
-import { ChatbotSettings } from "@/components/custom/SettingsChatbot";
+import { ChatbotSettings } from "@/components/custom/chatbot-dashboard/SettingsChatbot";
 import { convertTemperature } from "@/lib/utils";
 
 export async function PUT(req: NextRequest, { params }: { params: { chatbotId: string } }) {
