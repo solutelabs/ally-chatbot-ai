@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
-import { FileUploader, FileUploaderContent, FileUploaderItem, FileInput } from '../extension/file-uploader';
+import { FileUploader, FileUploaderContent, FileUploaderItem, FileInput } from '../../extension/file-uploader';
 import { Loader2, Paperclip } from 'lucide-react';
 import convertToMB from '@/lib/convertToMB';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import { maxTotalFileSize } from '@/lib/utils';
 import { Separator } from "@/components/ui/separator"
 import { FileSvgDraw } from "@/components/icons/Icons";
 import { toast } from 'sonner';
-import { UploadedFileItem } from './UploadedFileItem';
+import { UploadedFileItem } from '../UploadedFileItem';
 import { useRouter } from 'next/navigation';
 
 

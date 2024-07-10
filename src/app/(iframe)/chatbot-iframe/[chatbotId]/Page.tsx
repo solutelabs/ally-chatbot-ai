@@ -1,9 +1,14 @@
-import React from 'react'
+import { notFound } from "next/navigation";
+import { getChatbot } from "./action";
+import ChatbotIframe from "@/components/custom/ChatbotIframe";
 
-export default function Page({ params }: { params: { chatbotId: string } }) {
-    return (
-        <div>
-            <h1>{params.chatbotId}</h1>
-        </div>
-    )
+export default async function Iframe({ params }: { params: { chatbotId: string } }) {
+
+    const chatbotId = params.chatbotId;
+    const chatbot = await getChatbot(chatbotId);
+    if (!chatbot) {
+        notFound();
+    }
+
+    return <ChatbotIframe chatbotId={chatbotId} />
 }

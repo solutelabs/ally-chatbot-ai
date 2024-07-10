@@ -41,8 +41,8 @@ const DashboardChatbot = ({ chatbot }: { chatbot: chatbotType }) => {
                     <Label htmlFor="Created At">{chatbot.createdAt.toString().split("Z")[0].split("GMT+0530")[0]}</Label>
                 </div>
             </div>
-            <div className="w-[40vw] border h-[70vh]">
-                iframe
+            <div className="w-[35vw] border border-gray-500 h-[80vh]">
+                <iframe src={`/chatbot-iframe/${chatbot.chatBotId}`} className="w-full h-full"></iframe>
             </div>
         </>
     )

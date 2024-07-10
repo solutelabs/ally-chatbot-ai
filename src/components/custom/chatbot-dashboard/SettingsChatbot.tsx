@@ -23,9 +23,9 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
-import { Label } from "../ui/label";
-import { Separator } from "../ui/separator";
-import CopyToClipboard from "./CopyToClipboard";
+import { Label } from "../../ui/label";
+import { Separator } from "../../ui/separator";
+import CopyToClipboard from "../CopyToClipboard";
 import * as z from "zod"
 import { chatbotSettingsSchema } from "@/schemas/chatbotSettingsSchema";
 import { zodResolver } from "@hookform/resolvers/zod";

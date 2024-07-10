@@ -7,10 +7,11 @@ import {
 } from "@/components/ui/card"
 import getChatbot from "./action"
 import { notFound } from "next/navigation"
-import RetrainChatbot from "@/components/custom/RetrainChatbot"
+import RetrainChatbot from "@/components/custom/chatbot-dashboard/RetrainChatbot"
 import TabsTriggerChatbot from "@/components/custom/TabsTriggerChatbot"
-import DashboardChatbot from "@/components/custom/DashboardChatbot"
-import SettingsChatbot from "@/components/custom/SettingsChatbot"
+import DashboardChatbot from "@/components/custom/chatbot-dashboard/DashboardChatbot"
+import SettingsChatbot from "@/components/custom/chatbot-dashboard/SettingsChatbot"
+import ConnectChatbot from "@/components/custom/chatbot-dashboard/ConnectChatbot"
 
 export interface chatbotType {
     name: string;
@@ -40,9 +41,9 @@ export default async function Page({ params }: { params: { chatbotId: string, ac
                     <TabsTriggerChatbot chatbotId={chatbotId} />
                 </TabsList>
                 <TabsContent value="chatbot" >
-                    <Card className="border-2 mt-5 mb-20">
+                    <Card className="border-2 mt-5 mb-20 h-[100vh]">
                         <CardHeader>
-                            <CardTitle>{chatbot.name}</CardTitle>
+                            <CardTitle className="text-center">{chatbot.name}</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-row items-start justify-center">
                             <DashboardChatbot chatbot={chatbot} />
@@ -60,10 +61,14 @@ export default async function Page({ params }: { params: { chatbotId: string, ac
                     </Card>
                 </TabsContent>
                 <TabsContent value="connect">
-                    <div className="flex flex-col items-center justify-center min-h-[70vh]">
-                        <h1 className="text-5xl font-bold mb-5">ALLY</h1>
-                        <h1 className="text-2xl font-bold mb-5">Ai Assistant ChatBot</h1>
-                    </div>
+                    <Card className="border-2 mt-5 mb-20">
+                        <CardHeader>
+                            <CardTitle>Connect Chatbot</CardTitle>
+                        </CardHeader>
+                        <CardContent className="flex flex-row items-start justify-start w-[70vw]">
+                            <ConnectChatbot chatbotId={chatbot.chatBotId} />
+                        </CardContent>
+                    </Card>
                 </TabsContent>
                 <TabsContent value="settings">
                     <SettingsChatbot chatbot={chatbot} />
