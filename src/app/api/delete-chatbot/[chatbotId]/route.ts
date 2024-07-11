@@ -5,6 +5,7 @@ import OpenAI from "openai";
 import { ApiResponse } from "@/types/ApiResponse";
 import UserModel, { ChatBot } from "@/models/User";
 import { authOptions } from "../../auth/[...nextauth]/options";
+import { revalidatePath } from "next/cache";
 
 export async function DELETE(req: NextRequest, { params }: { params: { chatbotId: string } }) {
 
@@ -58,6 +59,8 @@ export async function DELETE(req: NextRequest, { params }: { params: { chatbotId
         // delete chatbot
         user.chatBots = user.chatBots.filter(chatbot => chatbot.chatBotId !== chatbotId);
         await user.save();
+
+        revalidatePath("/dashboard");
 
         return Response.json(ApiResponse(true, "Chatbot deleted successfully"), { status: 200 });
 

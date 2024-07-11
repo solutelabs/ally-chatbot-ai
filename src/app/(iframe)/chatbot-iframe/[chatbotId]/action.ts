@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/User";
+import { revalidatePath } from "next/cache";
 
 export async function getChatbot(chatbotId: string) {
     await dbConnect();
@@ -14,6 +15,7 @@ export async function getChatbot(chatbotId: string) {
             return null;
         }
 
+        revalidatePath(`/dashboard/chatbot/${chatbotId}/connect`);
         return data[0];
 
     } catch (error) {

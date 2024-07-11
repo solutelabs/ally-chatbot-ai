@@ -5,13 +5,13 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import getChatbot from "./action"
+import { getChatbot } from "./action"
 import { notFound } from "next/navigation"
 import RetrainChatbot from "@/components/custom/chatbot-dashboard/RetrainChatbot"
 import TabsTriggerChatbot from "@/components/custom/TabsTriggerChatbot"
 import DashboardChatbot from "@/components/custom/chatbot-dashboard/DashboardChatbot"
 import SettingsChatbot from "@/components/custom/chatbot-dashboard/SettingsChatbot"
-import ConnectChatbot from "@/components/custom/chatbot-dashboard/ConnectChatbot"
+import ConnectChatbot from "@/components/custom/chatbot-dashboard/connect-tab/ConnectChatbot"
 
 export interface chatbotType {
     name: string;

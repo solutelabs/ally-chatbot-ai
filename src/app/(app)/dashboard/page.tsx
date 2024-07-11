@@ -16,7 +16,7 @@ export default async function Page() {
     const chatbots = await getChatbots();
 
     return (
-        <div className='flex flex-col items-center w-full'>
+        <div className='flex flex-col items-center w-full' >
             <div className="flex flex-row items-center justify-between w-3/4 mt-10">
                 <h1 className='text-4xl font-bold'>Chatbots</h1>
                 <Link href={"/dashboard/create-chatbot"}>

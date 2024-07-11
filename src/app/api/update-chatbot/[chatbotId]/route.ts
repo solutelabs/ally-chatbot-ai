@@ -7,6 +7,7 @@ import UserModel, { ChatBot } from "@/models/User";
 import { authOptions } from "../../auth/[...nextauth]/options";
 import { ChatbotSettings } from "@/components/custom/chatbot-dashboard/SettingsChatbot";
 import { convertTemperature } from "@/lib/utils";
+import { revalidatePath } from "next/cache";
 
 export async function PUT(req: NextRequest, { params }: { params: { chatbotId: string } }) {
 
@@ -59,10 +60,12 @@ export async function PUT(req: NextRequest, { params }: { params: { chatbotId: s
         chatbot.visibility = data.visibility;
         await user.save();
 
-        return Response.json(ApiResponse(true, "Chatbot created successfully"), { status: 201 });
+        revalidatePath(`/dashboard/chatbot/${chatbotId}`)
+
+        return Response.json(ApiResponse(true, "Chatbot updated successfully"), { status: 200 });
 
     } catch (error) {
-        console.log("Error creating chatbot", error);
-        return Response.json(ApiResponse(false, "Failed to create chatbot", error), { status: 500 });
+        console.log("Error updating chatbot", error);
+        return Response.json(ApiResponse(false, "Failed to update chatbot", error), { status: 500 });
     }
 }
