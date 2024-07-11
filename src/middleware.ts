@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 export { default } from 'next-auth/middleware';
 
 export const config = {
-    matcher: ['/dashboard/:path*', '/sign-in', '/sign-up', '/'],
+    matcher: ['/dashboard/:path*', '/sign-in', '/sign-up', '/chatbot-iframe/:path*'],
 }
 
 export async function middleware(request: NextRequest) {

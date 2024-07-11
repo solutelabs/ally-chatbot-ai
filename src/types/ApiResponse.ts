@@ -1,5 +1,3 @@
-import { ChatBot } from "@/models/User";
-
 export interface ApiResponseType {
     success: boolean;
     message: string;

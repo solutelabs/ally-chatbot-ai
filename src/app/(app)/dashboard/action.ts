@@ -1,7 +1,6 @@
 "use server";
 
 import dbConnect from "@/lib/dbConnect";
-import { ApiResponse } from "@/types/ApiResponse";
 import { User, getServerSession } from "next-auth";
 import mongoose from "mongoose";
 import UserModel from "@/models/User";

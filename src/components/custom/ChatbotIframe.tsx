@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { MessageCard, MessageCardSkeleton } from '@/components/custom/MessageCard';
 
 export default function ChatbotIframe({ chatbotId }: { chatbotId: string }) {
+
     const { error, status, messages, input, submitMessage, handleInputChange, setMessages, setThreadId, threadId } =
         useAssistant({
             api: `/api/assistant/${chatbotId}`
@@ -21,31 +22,31 @@ export default function ChatbotIframe({ chatbotId }: { chatbotId: string }) {
     }, [error]);
 
     useEffect(() => {
-        const localThreadId = localStorage.getItem('threadId');
+        const localThreadId = localStorage.getItem(`threadId${chatbotId}`);
         if (localThreadId) {
             setThreadId(localThreadId);
         }
-        console.log(localStorage.getItem('messages'))
-        if (localStorage.getItem('messages') === null || localStorage.getItem('messages') === '[]') {
+        console.log(localStorage.getItem(`messages${chatbotId}`))
+        if (localStorage.getItem(`messages${chatbotId}`) === null || localStorage.getItem(`messages${chatbotId}`) === '[]') {
             setMessages([{
                 id: '1',
                 role: 'assistant',
                 content: 'Hello, how can I help you?'
             }]);
         } else {
-            setMessages(JSON.parse(localStorage.getItem('messages') || '[]'));
+            setMessages(JSON.parse(localStorage.getItem(`messages${chatbotId}`) || '[]'));
         }
     }, [])
 
     useEffect(() => {
         if (threadId) {
-            localStorage.setItem('threadId', threadId);
+            localStorage.setItem(`threadId${chatbotId}`, threadId);
         }
     }, [threadId])
 
     useEffect(() => {
         if (messages) {
-            localStorage.setItem('messages', JSON.stringify(messages));
+            localStorage.setItem(`messages${chatbotId}`, JSON.stringify(messages));
         }
     }, [messages])
 
@@ -61,8 +62,8 @@ export default function ChatbotIframe({ chatbotId }: { chatbotId: string }) {
 
             <div className="h-[6vh] border-b border-b-gray-300 flex justify-end items-center pr-5">
                 <RefreshCcw className='w-5 h-5 cursor-pointer' onClick={() => {
-                    localStorage.removeItem('threadId');
-                    localStorage.setItem('messages', JSON.stringify([
+                    localStorage.removeItem(`threadId${chatbotId}`);
+                    localStorage.setItem(`messages${chatbotId}`, JSON.stringify([
                         {
                             id: '1',
                             role: 'assistant',
