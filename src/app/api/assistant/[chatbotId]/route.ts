@@ -45,7 +45,7 @@ export async function POST(req: Request, { params }: { params: { chatbotId: stri
         role: 'user',
         content: input.message,
     });
-
+    
     return AssistantResponse(
         { threadId, messageId: createdMessage.id },
         async ({ forwardStream, sendDataMessage }: { forwardStream: any, sendDataMessage: any }) => {

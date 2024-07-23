@@ -10,9 +10,9 @@ const UsernameQuerySchema = z.object({
 export async function GET(req: Request) {
 
     await dbConnect();
+    const { searchParams } = new URL(req.url);
 
     try {
-        const { searchParams } = new URL(req.url);
         const queryParam = {
             username: searchParams.get("username")
         }
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
         const { username } = result.data;
 
         const existingUser = await UserModel.findOne({ username });
-        
+
         if (existingUser) {
             return Response.json({
                 success: false,
