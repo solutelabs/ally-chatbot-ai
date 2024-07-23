@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { useDebounceCallback } from "usehooks-ts";
 import { useToast } from "@/components/ui/use-toast";
 import axios, { AxiosError } from "axios";
-import { ApiResponse } from "@/types/ApiResponse";
+import { ApiResponse, ApiResponseType } from "@/types/ApiResponse";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -47,10 +47,10 @@ export default function SignInPage() {
             setIsCheckingUsername(true);
             setUsernameMessage("");
             try {
-                const response = await axios.get<ApiResponse>(`/api/check-unique-username?username=${username}`);
+                const response = await axios.get<ApiResponseType>(`/api/check-unique-username?username=${username}`);
                 setUsernameMessage(response.data.message);
             } catch (error) {
-                const axiosError = error as AxiosError<ApiResponse>;
+                const axiosError = error as AxiosError<ApiResponseType>;
                 setUsernameMessage(axiosError.response?.data.message || "Error checking username");
             } finally {
                 setIsCheckingUsername(false);
@@ -66,7 +66,7 @@ export default function SignInPage() {
     const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
         setIsSubmitting(true);
         try {
-            const response = await axios.post<ApiResponse>("/api/sign-up", data);
+            const response = await axios.post<ApiResponseType>("/api/sign-up", data);
             toast({
                 title: "Success",
                 description: response.data.message,
@@ -74,7 +74,7 @@ export default function SignInPage() {
             router.replace("/sign-in");
         } catch (error) {
             console.log("Error registering user", error);
-            const axiosError = error as AxiosError<ApiResponse>;
+            const axiosError = error as AxiosError<ApiResponseType>;
             const errorMessage = axiosError.response?.data.message || "Error registering user";
             toast({
                 title: "Error",
