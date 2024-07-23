@@ -65,7 +65,7 @@ export default async function Page({ params }: { params: { chatbotId: string, ac
                         <CardHeader>
                             <CardTitle>Connect Chatbot</CardTitle>
                         </CardHeader>
-                        <CardContent className="flex flex-row items-start justify-start w-[70vw]">
+                        <CardContent className="flex flex-row items-start justify-start w-full">
                             <ConnectChatbot chatbotId={chatbot.chatBotId} />
                         </CardContent>
                     </Card>
