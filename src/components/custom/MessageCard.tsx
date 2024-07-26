@@ -1,12 +1,14 @@
 import clsx from "clsx"
 import { Skeleton } from "../ui/skeleton"
+import MarkdownRenderer from "./MarkdownRenderer";
+
 
 
 export function MessageCard({ message, role }: { message: string, role: 'user' | 'assistant' }) {
     return (
-        <div className={clsx("flex w-[calc(100vw-8px)] pr-4 pl-4", role === 'user' ? 'justify-end' : 'justify-start')}>
-            <div className={clsx("max-w-[350px] border-none p-3 rounded-2xl", role === 'user' ? 'bg-gray-800 text-white rounded-br-none' : 'bg-gray-200 text-black rounded-bl-none')}>
-                {message}
+        <div className={clsx("flex w-[calc(100vw-8px)] pr-4 pl-4 chat", role === 'user' ? 'justify-end chat-end' : 'justify-start chat-start')}>
+            <div className={clsx("max-w-[350px] border-none p-3 rounded-2xl chat-bubble", role === 'user' ? 'bg-gray-800 text-white rounded-br-none' : 'bg-gray-200 text-black rounded-bl-none')}>
+                <MarkdownRenderer markdownText={message} />
             </div>
         </div>
     )
