@@ -18,7 +18,7 @@ export interface ChatBot extends Document {
     name: string;
     chatBotId: string;
     visibility: string;
-    assistantId: string;
+    assistantId: string; 
     trainedAt: Date;
     createdAt: Date;
     gptModel: string;
@@ -51,7 +51,7 @@ export interface User extends Document {
 export const UserSchema: Schema<User> = new Schema({
     username: { type: String, required: [true, "Username is required"], unique: true, trim: true },
     password: { type: String, required: [true, "Password is required"] },
-    chatBots: { type: [ChatBotSchema], default: [] },
+    chatBots: { type: [ChatBotSchema], default: null },
 })
 
 const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", UserSchema);
