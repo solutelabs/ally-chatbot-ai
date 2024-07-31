@@ -3,7 +3,7 @@
 Welcome to the ALLY Chatbot! This document provides an overview of our initiative to develop an advanced chatbot application using Next.js and the Retrieval-Augmented Generation (RAG) framework, integrated with OpenAI's ChatGPT API as a POC by Solutelabs.
 
 ## Demo Video
-## Live Demo(https://ally-chatbot-ai-git-develop-solutelabs.vercel.app/dashboard)
+## [Live Demo](https://ally-chatbot-ai-git-develop-solutelabs.vercel.app/dashboard)
 
 ## 🚀 Project Summary
 
