@@ -7,7 +7,13 @@ Welcome to the ALLY Chatbot! This document provides an overview of our initiativ
 
 ## 🚀 Project Summary
 
-The Chatbot Project aims to deliver a web-based application that allows users to interact with a sophisticated AI-powered chatbot. By leveraging Next.js for both frontend and backend development, and integrating with OpenAI's ChatGPT API, we are creating a chatbot that delivers accurate, contextually relevant responses. The chatbot can be fine-tuned for specific industry use cases, company knowledge bases, or product details, enhancing its effectiveness and relevance.
+The Chatbot Project aims to create an intuitive web-based application where users can interact with a smart, AI-driven chatbot. Using Next.js for development and OpenAI's ChatGPT API, the chatbot provides quick and accurate answers to user questions. It's designed to be easily tailored for specific industries or company needs, allowing businesses to offer personalized and relevant responses.
+
+### Use Cases 🚀
+
+- **Customer Support** 🛠️: The chatbot can handle common customer inquiries, provide troubleshooting steps, and escalate complex issues to human agents.
+- **Product Information** 📦: It can offer detailed product descriptions, specifications, and comparisons to help users make informed decisions.
+- **FAQ Automation** 🤖: The chatbot can automate responses to frequently asked questions, saving time for both customers and support teams.
 
 ## 🛠️ Technical Details
 
