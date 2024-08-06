@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ALLY Chatbot POC Overview 🌐
 
-## Getting Started 
+Welcome to the ALLY Chatbot! This document provides an overview of our initiative to develop an advanced chatbot application using Next.js and the Retrieval-Augmented Generation (RAG) framework, integrated with OpenAI's ChatGPT API as a POC by Solutelabs.
 
-First, run the development server:
+## Demo Video
+## [Live Demo](https://ally-chatbot-ai-git-develop-solutelabs.vercel.app/dashboard)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Project Summary
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The Chatbot Project aims to create an intuitive web-based application where users can interact with a smart, AI-driven chatbot. Using Next.js for development and OpenAI's ChatGPT API, the chatbot provides quick and accurate answers to user questions. It's designed to be easily tailored for specific industries or company needs, allowing businesses to offer personalized and relevant responses.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Use Cases 🚀
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Customer Support** 🛠️: The chatbot can handle common customer inquiries, provide troubleshooting steps, and escalate complex issues to human agents.
+- **Product Information** 📦: It can offer detailed product descriptions, specifications, and comparisons to help users make informed decisions.
+- **FAQ Automation** 🤖: The chatbot can automate responses to frequently asked questions, saving time for both customers and support teams.
 
-## Learn More
+## 🛠️ Technical Details
 
-To learn more about Next.js, take a look at the following resources:
+### Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Frontend**: Next.js - Provides the user interface for interaction with the chatbot.
+- **Backend**: Next.js API Routes - Manages communication with the OpenAI API.
+- **OpenAI API**: Powers the chatbot's conversational abilities.
+- **Storage**: OpenAI Platform.
+- **Deployment Platform**: Vercel - To host and deploy the application.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Platform Compatibility
 
-## Deploy on Vercel
+- **Browsers**: Compatible with the latest versions of Chrome, Edge, Firefox, and Safari.
+- **Responsiveness**: Designed for use on laptops and desktops.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📋 Key Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Admin Features
+
+- **Login**: Secure access to the platform.
+- **Dashboard**: Manage and view all custom-trained chatbots.
+- **Train New Chatbot**: Create and customize new chatbots.
+- **Document Management**: Upload and manage training documents.
+- **Chatbot Integration**: Embed the chatbot on your website.
+- **Testing**: Test and refine chatbot responses.
+- **Privacy Settings**: Control access and interaction privacy.
+- **Analytics**: View training data and chatbot performance.
+
+### User Features
+
+- **Chatbot Interaction**: Engage with the chatbot for queries and support.
+- **Chat History**: Review past interactions with the chatbot.
+
+## 📈 Performance & Reliability
+
+- **Response Time**: Targeted under 2 seconds.
+- **Availability**: 99.9% uptime with robust error handling.
+- **User Interface**: Designed for ease of use and accessibility.
+- **Localization**: Supports multiple languages in future versions.
+
+## 💬 Feedback & Contact
+
+For questions or feedback, please contact us at hello@solutelabs.com.
