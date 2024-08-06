@@ -11,7 +11,7 @@ export default function ChatbotIframe({ chatbotId }: { chatbotId: string }) {
 
     const divRef = useRef<HTMLDivElement | null>(null);
 
-    const { error, status, messages, input, submitMessage, handleInputChange, setMessages, setThreadId, threadId } =
+    const { error, status, messages, input, submitMessage, handleInputChange, setMessages, setThreadId, threadId, stop } =
         useAssistant({
             api: `/api/assistant/${chatbotId}`
         });
@@ -72,6 +72,7 @@ export default function ChatbotIframe({ chatbotId }: { chatbotId: string }) {
 
             <div className="h-[6vh] border-b border-b-gray-300 flex justify-end items-center pr-5">
                 <RefreshCcw className='w-5 h-5 cursor-pointer' onClick={() => {
+                    stop();
                     localStorage.removeItem(`threadId${chatbotId}`);
                     localStorage.setItem(`messages${chatbotId}`, JSON.stringify([
                         {
