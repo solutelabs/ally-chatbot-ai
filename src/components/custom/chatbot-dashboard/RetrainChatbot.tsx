@@ -62,9 +62,11 @@ const RetrainChatbot = ({ chatbotId }: { chatbotId: string }) => {
 
     useEffect(() => {
         if (files && files?.length !== 0) {
+            setTotalFileSize(0);
             files.forEach((file) => {
                 setTotalFileSize(totalFileSize => totalFileSize + file.size);
             })
+            setTotalFileSize(totalFileSize => totalFileSize + includedFiles.reduce((acc: number, file: FileData) => acc + file.fileSize, 0));
         }
         else {
             setTotalFileSize(includedFiles.reduce((acc: number, file: FileData) => acc + file.fileSize, 0));
