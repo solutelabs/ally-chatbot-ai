@@ -63,7 +63,8 @@ export default function ChatbotIframe({ chatbotId }: { chatbotId: string }) {
     };
 
     const handleOnSubmit = () => {
-        if (!input || input === '' || status !== "awaiting_message") return;
+        const inputWithoutSpaces = input.trim();
+        if (!inputWithoutSpaces || inputWithoutSpaces === '' || status !== "awaiting_message") return;
         submitMessage();
     }
 
